@@ -8,18 +8,17 @@ const outline = (ctx) => {
 
     chrome.tabs.create({ url: outlineUrl });
     console.log(data);
-  })
+  }).catch(e => {
+    alert('Unable to outline ' + query);
+    console.log('outliner error:', e);
+  });
 
 };
 
-chrome.runtime.onInstalled.addListener(() => {
-  console.log('start!');
-
-  chrome.contextMenus.create({
-    "id": "outlinerContextMenu",
-    title: "Outline it!",
-    contexts: ["page"],  // ContextType
-  });
-
-  chrome.contextMenus.onClicked.addListener(outline);
+chrome.contextMenus.create({
+  "id": "outlinerContextMenu",
+  title: "Outline it!",
+  contexts: ["page"],  // ContextType
 });
+
+chrome.contextMenus.onClicked.addListener(outline);
